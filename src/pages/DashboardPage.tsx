@@ -25,6 +25,8 @@ import {
   OPCOES_DESFECHO,
   OPCOES_COMORBIDADES,
   getFaixaEtaria,
+  type ClasseHistologica,
+  type DesfechoAlta,
 } from '../types';
 import { Users, Activity, TrendingUp, AlertCircle } from 'lucide-react';
 
@@ -41,14 +43,14 @@ export function DashboardPage() {
   const distribuicaoClasses = useMemo(() => {
     const valores = pacientes
       .map((p) => p.classificacaoHistologica)
-      .filter((c): c is string => !!c);
+      .filter((c): c is ClasseHistologica => !!c);
     return calcularDistribuicaoFrequencia(valores, OPCOES_CLASSE_HISTOLOGICA);
   }, [pacientes]);
 
   const distribuicaoDesfechos = useMemo(() => {
     const valores = pacientes
       .map((p) => p.desfechoAlta)
-      .filter((d): d is string => !!d);
+      .filter((d): d is DesfechoAlta => !!d);
     return calcularDistribuicaoFrequencia(valores, OPCOES_DESFECHO);
   }, [pacientes]);
 
@@ -156,14 +158,14 @@ export function DashboardPage() {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={distribuicaoClasses.filter((d) => d.frequenciaAbsoluta > 0)}
+                data={distribuicaoClasses.filter((d) => d.frequenciaAbsoluta > 0) as unknown as Record<string, unknown>[]}
                 dataKey="frequenciaAbsoluta"
                 nameKey="rotulo"
                 cx="50%"
                 cy="50%"
                 outerRadius={100}
-                label={({ name, percent }) =>
-                  `${name.split(' - ')[0]} (${(percent * 100).toFixed(0)}%)`
+                label={({ name, percent }: { name?: string; percent?: number }) =>
+                  `${(name ?? '').split(' - ')[0]} (${((percent ?? 0) * 100).toFixed(0)}%)`
                 }
               >
                 {distribuicaoClasses.map((_, index) => (

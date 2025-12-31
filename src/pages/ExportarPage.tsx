@@ -13,6 +13,8 @@ import {
   OPCOES_CLASSE_HISTOLOGICA,
   OPCOES_DESFECHO,
   OPCOES_SEXO,
+  type ClasseHistologica,
+  type DesfechoAlta,
 } from '../types';
 import {
   Download,
@@ -105,11 +107,11 @@ export function ExportarPage() {
       const doc = new jsPDF();
       const estatisticas = calcularEstatisticasGerais(pacientes);
       const distribuicaoClasses = calcularDistribuicaoFrequencia(
-        pacientes.map((p) => p.classificacaoHistologica).filter((c): c is string => !!c),
+        pacientes.map((p) => p.classificacaoHistologica).filter((c): c is ClasseHistologica => !!c),
         OPCOES_CLASSE_HISTOLOGICA
       );
       const distribuicaoDesfechos = calcularDistribuicaoFrequencia(
-        pacientes.map((p) => p.desfechoAlta).filter((d): d is string => !!d),
+        pacientes.map((p) => p.desfechoAlta).filter((d): d is DesfechoAlta => !!d),
         OPCOES_DESFECHO
       );
       const distribuicaoSexo = calcularDistribuicaoFrequencia(
@@ -243,12 +245,12 @@ export function ExportarPage() {
         body: [
           [
             'Necessidade de Diálise',
-            String(estatisticas?.dialise?.quantidade || 0),
+            String(estatisticas?.dialise?.necessitaram || 0),
             formatarPorcentagem(estatisticas?.dialise?.porcentagem || 0),
           ],
           [
             'Sexo Feminino',
-            String(estatisticas?.sexo?.quantidadeFeminino || 0),
+            String(estatisticas?.sexo?.feminino || 0),
             formatarPorcentagem(estatisticas?.sexo?.porcentagemFeminino || 0),
           ],
           [
@@ -407,11 +409,8 @@ export function ExportarPage() {
                 className="hidden"
                 disabled={loading === 'importar'}
               />
-              <Button
-                as="span"
-                variant="secondary"
-                loading={loading === 'importar'}
-                className="w-full cursor-pointer"
+              <span
+                className="inline-flex items-center justify-center gap-2 font-medium rounded-lg px-4 py-2 transition-colors bg-gray-200 text-gray-800 hover:bg-gray-300 w-full cursor-pointer"
                 onClick={() => {
                   const input = document.querySelector('input[type="file"]') as HTMLInputElement;
                   input?.click();
@@ -419,7 +418,7 @@ export function ExportarPage() {
               >
                 <Upload className="w-5 h-5" />
                 Importar Backup (JSON)
-              </Button>
+              </span>
             </label>
           </div>
         </Card>
