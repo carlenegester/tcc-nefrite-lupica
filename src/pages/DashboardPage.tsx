@@ -12,7 +12,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  Legend,
 } from 'recharts';
 import {
   calcularEstatisticasGerais,
@@ -25,7 +24,6 @@ import {
   OPCOES_CLASSE_HISTOLOGICA,
   OPCOES_DESFECHO,
   OPCOES_COMORBIDADES,
-  OPCOES_MANIFESTACOES_LES,
   getFaixaEtaria,
 } from '../types';
 import { Users, Activity, TrendingUp, AlertCircle } from 'lucide-react';

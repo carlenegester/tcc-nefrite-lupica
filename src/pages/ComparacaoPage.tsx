@@ -47,7 +47,7 @@ function agruparPacientes(
 
     switch (variavel) {
       case 'sexo':
-        chave = p.sexo === 'M' ? 'Masculino' : 'Feminino';
+        chave = p.sexo === 'masculino' ? 'Masculino' : 'Feminino';
         break;
       case 'faixaEtaria':
         chave = getFaixaEtaria(p.idade);
@@ -81,7 +81,7 @@ function calcularEstatisticasGrupo(pacientes: Paciente[]) {
     .filter((t): t is number => t !== undefined);
 
   const comDialise = pacientes.filter((p) => p.necessidadeDialise).length;
-  const feminino = pacientes.filter((p) => p.sexo === 'F').length;
+  const feminino = pacientes.filter((p) => p.sexo === 'feminino').length;
 
   return {
     n: pacientes.length,
@@ -113,16 +113,16 @@ export function ComparacaoPage() {
   const dadosIdade = useMemo(() => {
     return Object.entries(estatisticasPorGrupo).map(([nome, stats]) => ({
       grupo: nome,
-      media: stats.idade.media,
-      mediana: stats.idade.mediana,
+      media: stats.idade?.media ?? 0,
+      mediana: stats.idade?.mediana ?? 0,
     }));
   }, [estatisticasPorGrupo]);
 
   const dadosFuncaoRenal = useMemo(() => {
     return Object.entries(estatisticasPorGrupo).map(([nome, stats]) => ({
       grupo: nome,
-      creatinina: stats.creatinina.media,
-      tfg: stats.tfg.media,
+      creatinina: stats.creatinina?.media ?? 0,
+      tfg: stats.tfg?.media ?? 0,
     }));
   }, [estatisticasPorGrupo]);
 
@@ -228,19 +228,19 @@ export function ComparacaoPage() {
               <div className="flex justify-between">
                 <span className="text-gray-600">Idade média:</span>
                 <span className="font-medium">
-                  {formatarNumero(stats.idade.media, 1)} anos
+                  {formatarNumero(stats.idade?.media, 1)} anos
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Creatinina média:</span>
                 <span className="font-medium">
-                  {formatarNumero(stats.creatinina.media)} mg/dL
+                  {formatarNumero(stats.creatinina?.media)} mg/dL
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">TFG média:</span>
                 <span className="font-medium">
-                  {formatarNumero(stats.tfg.media, 1)} mL/min
+                  {formatarNumero(stats.tfg?.media, 1)} mL/min
                 </span>
               </div>
               <div className="flex justify-between">
@@ -286,8 +286,8 @@ export function ComparacaoPage() {
                 <td className="py-2 px-3 pl-6 text-gray-600">Média ± DP</td>
                 {nomesGrupos.map((nome) => (
                   <td key={nome} className="text-center py-2 px-3">
-                    {formatarNumero(estatisticasPorGrupo[nome].idade.media, 1)} ±{' '}
-                    {formatarNumero(estatisticasPorGrupo[nome].idade.desvioPadrao, 1)}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.idade?.media, 1)} ±{' '}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.idade?.desvioPadrao, 1)}
                   </td>
                 ))}
               </tr>
@@ -295,7 +295,7 @@ export function ComparacaoPage() {
                 <td className="py-2 px-3 pl-6 text-gray-600">Mediana</td>
                 {nomesGrupos.map((nome) => (
                   <td key={nome} className="text-center py-2 px-3">
-                    {formatarNumero(estatisticasPorGrupo[nome].idade.mediana, 1)}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.idade?.mediana, 1)}
                   </td>
                 ))}
               </tr>
@@ -308,8 +308,8 @@ export function ComparacaoPage() {
                 <td className="py-2 px-3 pl-6 text-gray-600">Média ± DP</td>
                 {nomesGrupos.map((nome) => (
                   <td key={nome} className="text-center py-2 px-3">
-                    {formatarNumero(estatisticasPorGrupo[nome].creatinina.media)} ±{' '}
-                    {formatarNumero(estatisticasPorGrupo[nome].creatinina.desvioPadrao)}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.creatinina?.media)} ±{' '}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.creatinina?.desvioPadrao)}
                   </td>
                 ))}
               </tr>
@@ -322,8 +322,8 @@ export function ComparacaoPage() {
                 <td className="py-2 px-3 pl-6 text-gray-600">Média ± DP</td>
                 {nomesGrupos.map((nome) => (
                   <td key={nome} className="text-center py-2 px-3">
-                    {formatarNumero(estatisticasPorGrupo[nome].tfg.media, 1)} ±{' '}
-                    {formatarNumero(estatisticasPorGrupo[nome].tfg.desvioPadrao, 1)}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.tfg?.media, 1)} ±{' '}
+                    {formatarNumero(estatisticasPorGrupo[nome]?.tfg?.desvioPadrao, 1)}
                   </td>
                 ))}
               </tr>

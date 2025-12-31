@@ -29,7 +29,7 @@ import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
 export function ExportarPage() {
-  const { pacientes, refetch } = usePacientes();
+  const { pacientes } = usePacientes();
   const [loading, setLoading] = useState<string | null>(null);
   const [mensagem, setMensagem] = useState<{ tipo: 'sucesso' | 'erro'; texto: string } | null>(null);
   const [confirmarLimpeza, setConfirmarLimpeza] = useState(false);
@@ -51,27 +51,26 @@ export function ExportarPage() {
         Código: p.codigo,
         'Data Internação': p.dataInternacao,
         Idade: p.idade,
-        Sexo: p.sexo === 'M' ? 'Masculino' : 'Feminino',
+        Sexo: p.sexo === 'masculino' ? 'Masculino' : 'Feminino',
         Etnia: p.etnia,
         'Diagnóstico Prévio LES': p.diagnosticoPrevioLES ? 'Sim' : 'Não',
         'Manifestações LES': p.manifestacoesIniciaisLES?.join(', ') || '',
         Comorbidades: p.comorbidades?.join(', ') || '',
         'PA Sistólica': p.pressaoArterialSistolica,
         'PA Diastólica': p.pressaoArterialDiastolica,
-        Edema: p.edema ? 'Sim' : 'Não',
-        'Proteína Urina 24h': p.proteinaUrina24h,
+        Edema: p.presencaEdema ? 'Sim' : 'Não',
+        'Proteinúria': p.proteinuria,
         'Creatinina Sérica': p.creatininaSerica,
         'TFG Estimada': p.tfgEstimada,
-        'Data Biópsia': p.dataBiopsia,
-        'Indicação Biópsia': p.indicacaoBiopsia,
+        'Data Biópsia': p.dataBiopsiaRenal,
+        'Indicação Biópsia': p.motivosIndicacaoBiopsia?.join(', ') || '',
         'Classificação Histológica': p.classificacaoHistologica,
         'Imunofluorescência': p.imunofluorescenciaPositiva?.join(', ') || '',
-        'Medicamentos Pré-biópsia': p.medicamentosPreBiopsia?.join(', ') || '',
-        'Medicamentos Pós-biópsia': p.medicamentosPosBiopsia?.join(', ') || '',
+        'Medicamentos Pré-biópsia': p.medicamentosAntesBiopsia?.join(', ') || '',
+        'Esquema Terapêutico Pós-biópsia': p.esquemaTerapeuticoAposBiopsia || '',
         'Tempo Internação': p.tempoInternacao,
         'Necessidade Diálise': p.necessidadeDialise ? 'Sim' : 'Não',
-        'Número Sessões Diálise': p.numeroSessoesDialise,
-        'Melhora Função Renal': p.melhoraFuncaoRenal ? 'Sim' : 'Não',
+        'Melhora Clínica': p.melhoraClinica || '',
         'Desfecho Alta': p.desfechoAlta,
       }));
 
