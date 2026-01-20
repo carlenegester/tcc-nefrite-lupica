@@ -65,7 +65,7 @@ const initialState: NovoPaciente = {
   dataBiopsiaRenal: '',
   motivosIndicacaoBiopsia: [],
   outrosMotivosBiopsia: '',
-  classificacaoHistologica: undefined,
+  classificacaoHistologica: [],
   imunofluorescenciaPositiva: [],
   complicacoesBiopsia: false,
   quaisComplicacoesBiopsia: '',
@@ -114,7 +114,7 @@ export function PacienteForm({ paciente, onSave, onCancel }: PacienteFormProps) 
         dataBiopsiaRenal: paciente.dataBiopsiaRenal,
         motivosIndicacaoBiopsia: paciente.motivosIndicacaoBiopsia,
         outrosMotivosBiopsia: paciente.outrosMotivosBiopsia,
-        classificacaoHistologica: paciente.classificacaoHistologica,
+        classificacaoHistologica: paciente.classificacaoHistologica || [],
         imunofluorescenciaPositiva: paciente.imunofluorescenciaPositiva,
         complicacoesBiopsia: paciente.complicacoesBiopsia,
         quaisComplicacoesBiopsia: paciente.quaisComplicacoesBiopsia,
@@ -223,19 +223,17 @@ export function PacienteForm({ paciente, onSave, onCancel }: PacienteFormProps) 
               checked={formData.diagnosticoPrevioLES}
               onChange={(e) => updateField('diagnosticoPrevioLES', e.target.checked)}
             />
-            {formData.diagnosticoPrevioLES && (
-              <Input
-                label="Ano do diagnóstico"
-                type="number"
-                min={1950}
-                max={new Date().getFullYear()}
-                value={formData.anoDiagnosticoLES || ''}
-                onChange={(e) =>
-                  updateField('anoDiagnosticoLES', parseInt(e.target.value) || undefined)
-                }
-                className="w-32"
-              />
-            )}
+            <Input
+              label="Ano do diagnóstico"
+              type="number"
+              min={1950}
+              max={new Date().getFullYear()}
+              value={formData.anoDiagnosticoLES || ''}
+              onChange={(e) =>
+                updateField('anoDiagnosticoLES', parseInt(e.target.value) || undefined)
+              }
+              className="w-32"
+            />
           </div>
 
           <CheckboxGroup
@@ -347,14 +345,16 @@ export function PacienteForm({ paciente, onSave, onCancel }: PacienteFormProps) 
                 onChange={(e) => updateField('fan', e.target.value)}
                 placeholder="Ex: 1:80, positivo"
               />
-              <Input
+              <Select
                 label="Anti-dsDNA"
-                type="number"
-                step="0.01"
                 value={formData.antiDsDNA || ''}
                 onChange={(e) =>
-                  updateField('antiDsDNA', parseFloat(e.target.value) || undefined)
+                  updateField('antiDsDNA', (e.target.value as 'reagente' | 'nao_reagente') || undefined)
                 }
+                options={[
+                  { value: 'reagente', label: 'Reagente' },
+                  { value: 'nao_reagente', label: 'Não Reagente' },
+                ]}
               />
               <Input
                 label="C3"
@@ -385,12 +385,12 @@ export function PacienteForm({ paciente, onSave, onCancel }: PacienteFormProps) 
               value={formData.dataBiopsiaRenal || ''}
               onChange={(e) => updateField('dataBiopsiaRenal', e.target.value)}
             />
-            <Select
+            <CheckboxGroup
               label="Classificação histológica (ISN/RPS 2018)"
               options={OPCOES_CLASSE_HISTOLOGICA}
-              value={formData.classificacaoHistologica || ''}
-              onChange={(e) =>
-                updateField('classificacaoHistologica', e.target.value as ClasseHistologica || undefined)
+              values={formData.classificacaoHistologica}
+              onChange={(values) =>
+                updateField('classificacaoHistologica', values as ClasseHistologica[])
               }
             />
           </div>

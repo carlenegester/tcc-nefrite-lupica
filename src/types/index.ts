@@ -94,7 +94,7 @@ export interface Paciente {
 
   // Exames laboratoriais
   fan?: string;
-  antiDsDNA?: number;
+  antiDsDNA?: 'reagente' | 'nao_reagente';
   c3?: number;
   c4?: number;
 
@@ -102,7 +102,7 @@ export interface Paciente {
   dataBiopsiaRenal?: string;
   motivosIndicacaoBiopsia: MotivoIndicacaoBiopsia[];
   outrosMotivosBiopsia?: string;
-  classificacaoHistologica?: ClasseHistologica;
+  classificacaoHistologica: ClasseHistologica[];
   imunofluorescenciaPositiva: Imunofluorescencia[];
   complicacoesBiopsia: boolean;
   quaisComplicacoesBiopsia?: string;

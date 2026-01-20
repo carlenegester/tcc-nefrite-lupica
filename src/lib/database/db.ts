@@ -32,7 +32,7 @@ interface PacienteDB {
   data_biopsia_renal?: string;
   motivos_indicacao_biopsia: string[];
   outros_motivos_biopsia?: string;
-  classificacao_histologica?: string;
+  classificacao_histologica: string[];
   imunofluorescencia_positiva: string[];
   complicacoes_biopsia: boolean;
   quais_complicacoes_biopsia?: string;
@@ -81,7 +81,7 @@ function toSnakeCase(paciente: Omit<Paciente, 'id' | 'criadoEm' | 'atualizadoEm'
     data_biopsia_renal: paciente.dataBiopsiaRenal,
     motivos_indicacao_biopsia: paciente.motivosIndicacaoBiopsia || [],
     outros_motivos_biopsia: paciente.outrosMotivosBiopsia,
-    classificacao_histologica: paciente.classificacaoHistologica,
+    classificacao_histologica: paciente.classificacaoHistologica || [],
     imunofluorescencia_positiva: paciente.imunofluorescenciaPositiva || [],
     complicacoes_biopsia: paciente.complicacoesBiopsia,
     quais_complicacoes_biopsia: paciente.quaisComplicacoesBiopsia,
@@ -130,7 +130,7 @@ function toCamelCase(row: PacienteDB): Paciente {
     dataBiopsiaRenal: row.data_biopsia_renal,
     motivosIndicacaoBiopsia: row.motivos_indicacao_biopsia as Paciente['motivosIndicacaoBiopsia'],
     outrosMotivosBiopsia: row.outros_motivos_biopsia,
-    classificacaoHistologica: row.classificacao_histologica as Paciente['classificacaoHistologica'],
+    classificacaoHistologica: (row.classificacao_histologica || []) as Paciente['classificacaoHistologica'],
     imunofluorescenciaPositiva: row.imunofluorescencia_positiva as Paciente['imunofluorescenciaPositiva'],
     complicacoesBiopsia: row.complicacoes_biopsia,
     quaisComplicacoesBiopsia: row.quais_complicacoes_biopsia,
