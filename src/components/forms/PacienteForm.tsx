@@ -217,14 +217,35 @@ export function PacienteForm({ paciente, onSave, onCancel }: PacienteFormProps) 
       {/* 1. Perfil Clínico-Epidemiológico */}
       <Card title="1. Perfil Clínico-Epidemiológico">
         <div className="space-y-4">
+          {/* 1.1 Diagnóstico prévio de LES */}
           <div className="flex items-center gap-4">
-            <Checkbox
-              label="Diagnóstico prévio de LES"
-              checked={formData.diagnosticoPrevioLES}
-              onChange={(e) => updateField('diagnosticoPrevioLES', e.target.checked)}
-            />
+            <span className="text-sm font-medium text-gray-700">1.1. Diagnóstico prévio de LES:</span>
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                name="diagnosticoPrevioLES"
+                checked={formData.diagnosticoPrevioLES === true}
+                onChange={() => updateField('diagnosticoPrevioLES', true)}
+                className="w-4 h-4 text-blue-600"
+              />
+              <span className="text-sm text-gray-700">Sim</span>
+            </label>
+            <label className="flex items-center gap-1">
+              <input
+                type="radio"
+                name="diagnosticoPrevioLES"
+                checked={formData.diagnosticoPrevioLES === false}
+                onChange={() => updateField('diagnosticoPrevioLES', false)}
+                className="w-4 h-4 text-blue-600"
+              />
+              <span className="text-sm text-gray-700">Não</span>
+            </label>
+          </div>
+
+          {/* 1.2 Ano de diagnóstico do LES */}
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-medium text-gray-700">1.2. Ano de diagnóstico do LES:</span>
             <Input
-              label="Ano do diagnóstico"
               type="number"
               min={1950}
               max={new Date().getFullYear()}

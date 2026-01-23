@@ -26,7 +26,7 @@ interface PacienteDB {
   creatinina_serica?: number;
   tfg_estimada?: number;
   fan?: string;
-  anti_ds_dna?: number;
+  anti_ds_dna?: string;
   c3?: number;
   c4?: number;
   data_biopsia_renal?: string;
