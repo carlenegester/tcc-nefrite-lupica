@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import {
   calcularEstatisticasGerais,
   calcularDistribuicaoFrequencia,
+  calcularDistribuicaoMultipla,
   formatarNumero,
   formatarPorcentagem,
 } from '../lib/statistics';
@@ -13,7 +14,6 @@ import {
   OPCOES_CLASSE_HISTOLOGICA,
   OPCOES_DESFECHO,
   OPCOES_SEXO,
-  type ClasseHistologica,
   type DesfechoAlta,
 } from '../types';
 import {
@@ -66,7 +66,7 @@ export function ExportarPage() {
         'TFG Estimada': p.tfgEstimada,
         'Data Biópsia': p.dataBiopsiaRenal,
         'Indicação Biópsia': p.motivosIndicacaoBiopsia?.join(', ') || '',
-        'Classificação Histológica': p.classificacaoHistologica,
+        'Classificação Histológica': p.classificacaoHistologica?.join(', ') || '',
         'Imunofluorescência': p.imunofluorescenciaPositiva?.join(', ') || '',
         'Medicamentos Pré-biópsia': p.medicamentosAntesBiopsia?.join(', ') || '',
         'Esquema Terapêutico Pós-biópsia': p.esquemaTerapeuticoAposBiopsia || '',
@@ -106,8 +106,8 @@ export function ExportarPage() {
     try {
       const doc = new jsPDF();
       const estatisticas = calcularEstatisticasGerais(pacientes);
-      const distribuicaoClasses = calcularDistribuicaoFrequencia(
-        pacientes.map((p) => p.classificacaoHistologica).filter((c): c is ClasseHistologica => !!c),
+      const distribuicaoClasses = calcularDistribuicaoMultipla(
+        pacientes.map((p) => p.classificacaoHistologica || []),
         OPCOES_CLASSE_HISTOLOGICA
       );
       const distribuicaoDesfechos = calcularDistribuicaoFrequencia(

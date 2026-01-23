@@ -25,7 +25,6 @@ import {
   OPCOES_DESFECHO,
   OPCOES_COMORBIDADES,
   getFaixaEtaria,
-  type ClasseHistologica,
   type DesfechoAlta,
 } from '../types';
 import { Users, Activity, TrendingUp, AlertCircle } from 'lucide-react';
@@ -41,10 +40,8 @@ export function DashboardPage() {
   }, [pacientes]);
 
   const distribuicaoClasses = useMemo(() => {
-    const valores = pacientes
-      .map((p) => p.classificacaoHistologica)
-      .filter((c): c is ClasseHistologica => !!c);
-    return calcularDistribuicaoFrequencia(valores, OPCOES_CLASSE_HISTOLOGICA);
+    const arrays = pacientes.map((p) => p.classificacaoHistologica || []);
+    return calcularDistribuicaoMultipla(arrays, OPCOES_CLASSE_HISTOLOGICA);
   }, [pacientes]);
 
   const distribuicaoDesfechos = useMemo(() => {

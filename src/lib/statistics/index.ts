@@ -155,9 +155,10 @@ export function calcularEstatisticasGerais(pacientes: Paciente[]) {
   // Classes histológicas
   const classesContagem: Record<string, number> = {};
   pacientes.forEach((p) => {
-    if (p.classificacaoHistologica) {
-      classesContagem[p.classificacaoHistologica] =
-        (classesContagem[p.classificacaoHistologica] || 0) + 1;
+    if (p.classificacaoHistologica && p.classificacaoHistologica.length > 0) {
+      p.classificacaoHistologica.forEach((classe) => {
+        classesContagem[classe] = (classesContagem[classe] || 0) + 1;
+      });
     }
   });
 

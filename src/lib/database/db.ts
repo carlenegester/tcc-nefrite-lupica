@@ -124,7 +124,7 @@ function toCamelCase(row: PacienteDB): Paciente {
     creatininaSerica: row.creatinina_serica,
     tfgEstimada: row.tfg_estimada,
     fan: row.fan,
-    antiDsDNA: row.anti_ds_dna,
+    antiDsDNA: row.anti_ds_dna as 'reagente' | 'nao_reagente' | undefined,
     c3: row.c3,
     c4: row.c4,
     dataBiopsiaRenal: row.data_biopsia_renal,

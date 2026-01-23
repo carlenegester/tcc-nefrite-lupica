@@ -35,7 +35,7 @@ export function PacientesPage() {
 
     const matchSexo = filtroSexo === '' || p.sexo === filtroSexo;
     const matchClasse =
-      filtroClasse === '' || p.classificacaoHistologica === filtroClasse;
+      filtroClasse === '' || p.classificacaoHistologica?.includes(filtroClasse as any);
 
     return matchBusca && matchSexo && matchClasse;
   });
@@ -45,10 +45,12 @@ export function PacientesPage() {
     setPacienteExcluir(null);
   };
 
-  const getClasseLabel = (classe: string | undefined) => {
-    if (!classe) return '-';
-    const opcao = OPCOES_CLASSE_HISTOLOGICA.find((o) => o.value === classe);
-    return opcao?.label.split(' - ')[0] || classe;
+  const getClasseLabel = (classes: string[] | undefined) => {
+    if (!classes || classes.length === 0) return '-';
+    return classes.map((classe) => {
+      const opcao = OPCOES_CLASSE_HISTOLOGICA.find((o) => o.value === classe);
+      return opcao?.label.split(' - ')[0] || classe;
+    }).join(', ');
   };
 
   const getDesfechoLabel = (desfecho: string | undefined) => {

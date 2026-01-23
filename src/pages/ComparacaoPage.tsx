@@ -133,7 +133,7 @@ export function ComparacaoPage() {
       classesPorGrupo[nomeGrupo] = {};
       OPCOES_CLASSE_HISTOLOGICA.forEach((opcao) => {
         const count = pacientesGrupo.filter(
-          (p) => p.classificacaoHistologica === opcao.value
+          (p) => p.classificacaoHistologica?.includes(opcao.value)
         ).length;
         classesPorGrupo[nomeGrupo][opcao.label] = count;
       });
