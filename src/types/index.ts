@@ -38,6 +38,7 @@ export type ClasseHistologica =
   | 'classe_iv'
   | 'classe_v'
   | 'classe_vi'
+  | 'em_fase_remissao'
   | 'inconclusivo';
 
 // Imunofluorescência
@@ -198,6 +199,7 @@ export const OPCOES_CLASSE_HISTOLOGICA = [
   { value: 'classe_iv', label: 'Classe IV - Difusa' },
   { value: 'classe_v', label: 'Classe V - Membranosa' },
   { value: 'classe_vi', label: 'Classe VI - Esclerose avançada' },
+  { value: 'em_fase_remissao', label: 'Em fase de remissão' },
   { value: 'inconclusivo', label: 'Inconclusivo' },
 ] as const;
 
