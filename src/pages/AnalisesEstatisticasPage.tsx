@@ -2401,8 +2401,204 @@ export function AnalisesEstatisticasPage() {
               )}
             </div>
 
+            {/* Comparação: Dados Histológicos vs Manifestações Clínicas */}
+            <div className="space-y-6 mt-8">
+              <h3 className="font-semibold text-gray-800 border-b pb-2 border-purple-300">
+                <span className="text-purple-700">Comparação: Dados Histológicos vs Manifestações Clínicas</span>
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Análises que comparam a classificação histológica ISN/RPS com as manifestações clínicas iniciais do LES.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {associacaoClasseEpilepsia && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseEpilepsia.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Epilepsia</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseEpilepsia.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseEpilepsia.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseEpilepsia.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseAnemia && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseAnemia.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Anemia</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseAnemia.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseAnemia.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseAnemia.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseArtralgia && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseArtralgia.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Artralgia/Artrite</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseArtralgia.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseArtralgia.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseArtralgia.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseLesoesCutaneas && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseLesoesCutaneas.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Lesões Cutâneas</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseLesoesCutaneas.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseLesoesCutaneas.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseLesoesCutaneas.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseFebre && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseFebre.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Febre</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseFebre.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseFebre.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseFebre.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseSerosites && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseSerosites.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Serosites</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseSerosites.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseSerosites.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseSerosites.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseAcometimentoRenal && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseAcometimentoRenal.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Acometimento Renal</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseAcometimentoRenal.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseAcometimentoRenal.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseAcometimentoRenal.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseHematuria && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseHematuria.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Hematúria</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseHematuria.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseHematuria.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseHematuria.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseEdema && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseEdema.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-purple-50 border border-purple-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Edema</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseEdema.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseEdema.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseEdema.conclusao}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Comparação: Dados Histológicos vs Parâmetros Laboratoriais */}
+            <div className="space-y-6 mt-8">
+              <h3 className="font-semibold text-gray-800 border-b pb-2 border-teal-300">
+                <span className="text-teal-700">Comparação: Dados Histológicos vs Parâmetros Laboratoriais</span>
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Comparação de parâmetros laboratoriais entre classes histológicas graves (III, IV, VI) e leves (I, II, V).
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {testeCreatininaClasseGravidade && (
+                  <div className={`p-4 rounded-lg ${testeCreatininaClasseGravidade.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-teal-50 border border-teal-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Creatinina: Graves vs Leves</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${testeCreatininaClasseGravidade.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(testeCreatininaClasseGravidade.teste.pValor)}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">Graves:</span> {formatarNumero(testeCreatininaClasseGravidade.grupo1.media, 2)} mg/dL |
+                      <span className="font-medium"> Leves:</span> {formatarNumero(testeCreatininaClasseGravidade.grupo2.media, 2)} mg/dL
+                    </div>
+                    <p className="text-sm text-gray-600">{testeCreatininaClasseGravidade.conclusao}</p>
+                  </div>
+                )}
+                {testeProteinuriaClasseGravidade && (
+                  <div className={`p-4 rounded-lg ${testeProteinuriaClasseGravidade.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-teal-50 border border-teal-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Proteinúria: Graves vs Leves</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${testeProteinuriaClasseGravidade.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(testeProteinuriaClasseGravidade.teste.pValor)}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">Graves:</span> {formatarNumero(testeProteinuriaClasseGravidade.grupo1.media, 2)} g/24h |
+                      <span className="font-medium"> Leves:</span> {formatarNumero(testeProteinuriaClasseGravidade.grupo2.media, 2)} g/24h
+                    </div>
+                    <p className="text-sm text-gray-600">{testeProteinuriaClasseGravidade.conclusao}</p>
+                  </div>
+                )}
+                {testeTFGClasseGravidade && (
+                  <div className={`p-4 rounded-lg ${testeTFGClasseGravidade.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-teal-50 border border-teal-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">TFG: Graves vs Leves</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${testeTFGClasseGravidade.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(testeTFGClasseGravidade.teste.pValor)}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">Graves:</span> {formatarNumero(testeTFGClasseGravidade.grupo1.media, 1)} mL/min |
+                      <span className="font-medium"> Leves:</span> {formatarNumero(testeTFGClasseGravidade.grupo2.media, 1)} mL/min
+                    </div>
+                    <p className="text-sm text-gray-600">{testeTFGClasseGravidade.conclusao}</p>
+                  </div>
+                )}
+                {testeC4ClasseGravidade && (
+                  <div className={`p-4 rounded-lg ${testeC4ClasseGravidade.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-teal-50 border border-teal-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">C4: Graves vs Leves</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${testeC4ClasseGravidade.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(testeC4ClasseGravidade.teste.pValor)}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">Graves:</span> {formatarNumero(testeC4ClasseGravidade.grupo1.media, 1)} |
+                      <span className="font-medium"> Leves:</span> {formatarNumero(testeC4ClasseGravidade.grupo2.media, 1)}
+                    </div>
+                    <p className="text-sm text-gray-600">{testeC4ClasseGravidade.conclusao}</p>
+                  </div>
+                )}
+                {associacaoClasseAntiDNA && (
+                  <div className={`p-4 rounded-lg ${associacaoClasseAntiDNA.teste.significativo ? 'bg-green-50 border border-green-200' : 'bg-teal-50 border border-teal-200'}`}>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-700">Classe vs Anti-dsDNA</h4>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${associacaoClasseAntiDNA.teste.significativo ? 'bg-green-100 text-green-800' : 'bg-gray-200 text-gray-600'}`}>
+                        p = {formatarPValor(associacaoClasseAntiDNA.teste.pValor)}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">{associacaoClasseAntiDNA.conclusao}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Aviso sobre limitações */}
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mt-8">
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0" />
                 <div>
