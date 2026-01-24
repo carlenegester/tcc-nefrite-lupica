@@ -6,6 +6,7 @@ import { EntradaDadosPage } from './pages/EntradaDadosPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ComparacaoPage } from './pages/ComparacaoPage';
 import { ExportarPage } from './pages/ExportarPage';
+import { AnalisesEstatisticasPage } from './pages/AnalisesEstatisticasPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/entrada/:id" element={<EntradaDadosPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/comparacao" element={<ComparacaoPage />} />
+          <Route path="/analises" element={<AnalisesEstatisticasPage />} />
           <Route path="/exportar" element={<ExportarPage />} />
         </Routes>
       </Layout>

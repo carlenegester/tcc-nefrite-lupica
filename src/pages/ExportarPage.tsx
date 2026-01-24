@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { usePacientes } from '../hooks/usePacientes';
-import { exportarDados, importarDados, limparTodosDados } from '../lib/database/db';
+import { exportarDados, importarDados, limparTodosDados, corrigirEtnias } from '../lib/database/db';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import {
@@ -25,13 +25,14 @@ import {
   AlertTriangle,
   CheckCircle,
   Database,
+  Wrench,
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
 export function ExportarPage() {
-  const { pacientes } = usePacientes();
+  const { pacientes, refetch } = usePacientes();
   const [loading, setLoading] = useState<string | null>(null);
   const [mensagem, setMensagem] = useState<{ tipo: 'sucesso' | 'erro'; texto: string } | null>(null);
   const [confirmarLimpeza, setConfirmarLimpeza] = useState(false);
@@ -332,6 +333,24 @@ export function ExportarPage() {
     }
   };
 
+  const handleCorrigirEtnias = async () => {
+    setLoading('etnias');
+    try {
+      const corrigidos = await corrigirEtnias();
+      await refetch(); // Recarrega os dados após a correção
+      if (corrigidos > 0) {
+        mostrarMensagem('sucesso', `${corrigidos} etnias foram normalizadas com sucesso!`);
+      } else {
+        mostrarMensagem('sucesso', 'Todas as etnias já estão no formato correto!');
+      }
+    } catch (error) {
+      mostrarMensagem('erro', 'Erro ao corrigir etnias');
+      console.error(error);
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-800">Exportar Dados</h1>
@@ -437,6 +456,28 @@ export function ExportarPage() {
           <p className="text-sm text-gray-600">
             Os dados são armazenados localmente no seu navegador usando IndexedDB.
             Faça backups regulares para não perder os dados.
+          </p>
+        </Card>
+
+        {/* Manutenção de Dados */}
+        <Card title="Manutenção de Dados">
+          <p className="text-gray-600 mb-4">
+            Ferramentas para corrigir e normalizar dados no banco.
+          </p>
+          <div className="space-y-3">
+            <Button
+              onClick={handleCorrigirEtnias}
+              loading={loading === 'etnias'}
+              disabled={pacientes.length === 0}
+              variant="secondary"
+              className="w-full"
+            >
+              <Wrench className="w-5 h-5" />
+              Normalizar Etnias (branco, pardo, preto)
+            </Button>
+          </div>
+          <p className="text-xs text-gray-500 mt-3">
+            Corrige variações como "Branca", "Parda", "parda" para o formato padrão.
           </p>
         </Card>
 

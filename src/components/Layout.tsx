@@ -8,6 +8,7 @@ import {
   GitCompare,
   Download,
   Database,
+  Calculator,
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -20,6 +21,7 @@ const menuItems = [
   { path: '/entrada', icon: FileEdit, label: 'Entrada de Dados' },
   { path: '/dashboard', icon: BarChart3, label: 'Dashboard' },
   { path: '/comparacao', icon: GitCompare, label: 'Comparação' },
+  { path: '/analises', icon: Calculator, label: 'Análises Estatísticas' },
   { path: '/exportar', icon: Download, label: 'Exportar' },
 ];
 

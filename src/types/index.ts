@@ -9,8 +9,8 @@ export type ManifestacaoInicialLES =
   | 'lesoes_cutaneas'
   | 'febre'
   | 'serosites'
-  | 'psicose'
-  | 'alteracoes_hematologicas'
+  | 'epilepsia'
+  | 'anemia'
   | 'acometimento_renal'
   | 'outros';
 
@@ -170,8 +170,8 @@ export const OPCOES_MANIFESTACOES_LES = [
   { value: 'lesoes_cutaneas', label: 'Lesões cutâneas' },
   { value: 'febre', label: 'Febre' },
   { value: 'serosites', label: 'Serosites' },
-  { value: 'psicose', label: 'Psicose' },
-  { value: 'alteracoes_hematologicas', label: 'Alterações hematológicas' },
+  { value: 'epilepsia', label: 'Epilepsia' },
+  { value: 'anemia', label: 'Anemia' },
   { value: 'acometimento_renal', label: 'Acometimento renal' },
   { value: 'outros', label: 'Outros' },
 ] as const;

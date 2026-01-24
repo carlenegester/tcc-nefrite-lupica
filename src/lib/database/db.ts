@@ -1,6 +1,40 @@
 import { supabase } from './supabase';
 import type { Paciente } from '../../types';
 
+// Função para normalizar etnia para o padrão: branco, pardo, preto
+function normalizarEtnia(etnia: string | undefined | null): string {
+  if (!etnia) return '';
+
+  const etniaLower = etnia.toLowerCase().trim();
+
+  // Normalizar variações de "branco"
+  if (etniaLower === 'branca' || etniaLower === 'branco') {
+    return 'branco';
+  }
+
+  // Normalizar variações de "pardo"
+  if (etniaLower === 'parda' || etniaLower === 'pardo') {
+    return 'pardo';
+  }
+
+  // Normalizar variações de "preto"
+  if (etniaLower === 'preta' || etniaLower === 'preto' || etniaLower === 'negro' || etniaLower === 'negra') {
+    return 'preto';
+  }
+
+  // Normalizar variações de "indígena"
+  if (etniaLower === 'indigena' || etniaLower === 'indígena') {
+    return 'indigena';
+  }
+
+  // Normalizar variações de "amarelo"
+  if (etniaLower === 'amarela' || etniaLower === 'amarelo') {
+    return 'amarelo';
+  }
+
+  return etniaLower;
+}
+
 // Tipo para os dados do banco (snake_case)
 interface PacienteDB {
   id: string;
@@ -58,7 +92,7 @@ function toSnakeCase(paciente: Omit<Paciente, 'id' | 'criadoEm' | 'atualizadoEm'
     idade: paciente.idade,
     data_nascimento: paciente.dataNascimento,
     sexo: paciente.sexo === 'feminino' ? 'F' : 'M',
-    etnia: paciente.etnia,
+    etnia: normalizarEtnia(paciente.etnia),
     naturalidade: paciente.naturalidade,
     municipio_residencia: paciente.municipioResidencia,
     diagnostico_previo_les: paciente.diagnosticoPrevioLES,
@@ -100,14 +134,18 @@ function toSnakeCase(paciente: Omit<Paciente, 'id' | 'criadoEm' | 'atualizadoEm'
 
 // Converter de snake_case (banco) para camelCase (app)
 function toCamelCase(row: PacienteDB): Paciente {
+  // Normaliza o valor do sexo para lidar com diferentes formatos no banco
+  const sexoNormalizado = row.sexo?.toUpperCase();
+  const isFeminino = sexoNormalizado === 'F' || sexoNormalizado === 'FEMININO';
+
   return {
     id: row.id,
     codigo: row.codigo,
     dataInternacao: row.data_internacao,
     idade: row.idade,
     dataNascimento: row.data_nascimento,
-    sexo: row.sexo === 'F' ? 'feminino' : 'masculino',
-    etnia: row.etnia || '',
+    sexo: isFeminino ? 'feminino' : 'masculino',
+    etnia: normalizarEtnia(row.etnia),
     naturalidade: row.naturalidade || '',
     municipioResidencia: row.municipio_residencia || '',
     diagnosticoPrevioLES: row.diagnostico_previo_les,
@@ -276,4 +314,29 @@ export async function limparTodosDados(): Promise<void> {
     .neq('id', '00000000-0000-0000-0000-000000000000');
 
   if (error) throw error;
+}
+
+// Função para corrigir as etnias existentes no banco de dados
+export async function corrigirEtnias(): Promise<number> {
+  const { data, error } = await supabase
+    .from('pacientes')
+    .select('id, etnia');
+
+  if (error) throw error;
+
+  let corrigidos = 0;
+  for (const paciente of data || []) {
+    const etniaNormalizada = normalizarEtnia(paciente.etnia);
+    if (etniaNormalizada !== paciente.etnia) {
+      const { error: updateError } = await supabase
+        .from('pacientes')
+        .update({ etnia: etniaNormalizada })
+        .eq('id', paciente.id);
+
+      if (updateError) throw updateError;
+      corrigidos++;
+    }
+  }
+
+  return corrigidos;
 }

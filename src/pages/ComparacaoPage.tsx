@@ -72,13 +72,13 @@ function agruparPacientes(
 }
 
 function calcularEstatisticasGrupo(pacientes: Paciente[]) {
-  const idades = pacientes.map((p) => p.idade);
+  const idades = pacientes.map((p) => p.idade).filter((i) => i > 0);
   const creatininas = pacientes
     .map((p) => p.creatininaSerica)
-    .filter((c): c is number => c !== undefined);
+    .filter((c): c is number => typeof c === 'number' && !isNaN(c) && c > 0);
   const tfgs = pacientes
     .map((p) => p.tfgEstimada)
-    .filter((t): t is number => t !== undefined);
+    .filter((t): t is number => typeof t === 'number' && !isNaN(t) && t > 0);
 
   const comDialise = pacientes.filter((p) => p.necessidadeDialise).length;
   const feminino = pacientes.filter((p) => p.sexo === 'feminino').length;
