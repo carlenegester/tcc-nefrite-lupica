@@ -1196,13 +1196,13 @@ export function AnalisesEstatisticasPage() {
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percentual }) => `${name}: ${formatarPorcentagem(percentual)}`}
+                      label={({ name, payload }: any) => `${name}: ${formatarPorcentagem(payload?.percentual || 0)}`}
                     >
                       {distribuicaoSexo.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={['#FF6B6B', '#4ECDC4'][index]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => [value, 'Pacientes']} />
+                    <Tooltip formatter={(value: any) => [value, 'Pacientes']} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -1216,7 +1216,7 @@ export function AnalisesEstatisticasPage() {
                     <XAxis type="number" />
                     <YAxis dataKey="name" type="category" width={100} />
                     <Tooltip
-                      formatter={(value: number, name: string, props: any) => [
+                      formatter={(value: any, _name: any, props: any) => [
                         `${value} (${formatarPorcentagem(props.payload.percentual)})`,
                         'Pacientes',
                       ]}
@@ -1258,7 +1258,7 @@ export function AnalisesEstatisticasPage() {
                     <XAxis dataKey="categoria" />
                     <YAxis />
                     <Tooltip
-                      formatter={(value: number, name: string, props: any) => [
+                      formatter={(value: any, _name: any, props: any) => [
                         `${value} (${formatarPorcentagem(props.payload.percentual)})`,
                         'Pacientes',
                       ]}
@@ -1315,7 +1315,7 @@ export function AnalisesEstatisticasPage() {
                     <XAxis dataKey="classe" />
                     <YAxis label={{ value: 'TFG (mL/min)', angle: -90, position: 'insideLeft' }} />
                     <Tooltip
-                      formatter={(value: number) => [formatarNumero(value, 1), 'TFG média']}
+                      formatter={(value: any) => [formatarNumero(value, 1), 'TFG média']}
                       labelFormatter={(label) => `Classe ${label}: ${CLASSES_DESCRICAO[label] || ''}`}
                     />
                     <Bar dataKey="media" fill="#E74C3C" name="Média" />
@@ -1350,7 +1350,7 @@ export function AnalisesEstatisticasPage() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="marcador" />
                 <YAxis label={{ value: 'Positividade (%)', angle: -90, position: 'insideLeft' }} />
-                <Tooltip formatter={(value: number) => [`${formatarPorcentagem(value)}`, 'Positividade']} />
+                <Tooltip formatter={(value: any) => [`${formatarPorcentagem(value)}`, 'Positividade']} />
                 <Bar dataKey="percentual" name="Positividade">
                   {distribuicaoImuno.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -1413,13 +1413,13 @@ export function AnalisesEstatisticasPage() {
                       outerRadius={60}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percentual }) => `${name}: ${formatarPorcentagem(percentual)}`}
+                      label={({ name, payload }: any) => `${name}: ${formatarPorcentagem(payload?.percentual || 0)}`}
                     >
                       {distribuicaoDialise.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={['#E74C3C', '#2ECC71'][index]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => [value, 'Pacientes']} />
+                    <Tooltip formatter={(value: any) => [value, 'Pacientes']} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -1436,13 +1436,13 @@ export function AnalisesEstatisticasPage() {
                       outerRadius={60}
                       fill="#8884d8"
                       dataKey="value"
-                      label={({ name, percentual }) => `${name}: ${formatarPorcentagem(percentual)}`}
+                      label={({ name, payload }: any) => `${name}: ${formatarPorcentagem(payload?.percentual || 0)}`}
                     >
                       {distribuicaoMelhora.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={['#2ECC71', '#F39C12', '#E74C3C'][index]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => [value, 'Pacientes']} />
+                    <Tooltip formatter={(value: any) => [value, 'Pacientes']} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
@@ -1453,19 +1453,19 @@ export function AnalisesEstatisticasPage() {
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
                     <Pie
-                      data={distribuicaoDesfechos}
+                      data={distribuicaoDesfechos as any}
                       cx="50%"
                       cy="50%"
                       outerRadius={60}
                       fill="#8884d8"
                       dataKey="quantidade"
-                      label={({ categoria, percentual }) => `${categoria}: ${formatarPorcentagem(percentual)}`}
+                      label={({ payload }: any) => `${payload?.categoria || ''}: ${formatarPorcentagem(payload?.percentual || 0)}`}
                     >
                       {distribuicaoDesfechos.map((_, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => [value, 'Pacientes']} />
+                    <Tooltip formatter={(value: any) => [value, 'Pacientes']} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
