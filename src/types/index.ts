@@ -41,7 +41,7 @@ export type ClasseHistologica =
   | 'inconclusivo';
 
 // Imunofluorescência
-export type Imunofluorescencia = 'igg' | 'iga' | 'igm' | 'c3' | 'c1q';
+export type Imunofluorescencia = 'igg' | 'iga' | 'igm' | 'c3' | 'c1q' | 'inconclusivo';
 
 // Medicamentos
 export type Medicamento =
@@ -53,7 +53,7 @@ export type Medicamento =
   | 'outros';
 
 // Tipo de pulsoterapia
-export type TipoPulsoterapia = 'dexametasona' | 'metilprednisolona';
+export type TipoPulsoterapia = 'dexametasona' | 'metilprednisolona' | 'ciclofosfamida';
 
 // Desfecho da alta
 export type DesfechoAlta = 'alta' | 'obito' | 'transferencia';
@@ -207,6 +207,7 @@ export const OPCOES_IMUNOFLUORESCENCIA = [
   { value: 'igm', label: 'IgM' },
   { value: 'c3', label: 'C3' },
   { value: 'c1q', label: 'C1q' },
+  { value: 'inconclusivo', label: 'Inconclusivo' },
 ] as const;
 
 export const OPCOES_MEDICAMENTOS = [
@@ -221,6 +222,7 @@ export const OPCOES_MEDICAMENTOS = [
 export const OPCOES_TIPO_PULSOTERAPIA = [
   { value: 'dexametasona', label: 'Dexametasona' },
   { value: 'metilprednisolona', label: 'Metilprednisolona' },
+  { value: 'ciclofosfamida', label: 'Ciclofosfamida' },
 ] as const;
 
 export const OPCOES_MELHORA_CLINICA = [
